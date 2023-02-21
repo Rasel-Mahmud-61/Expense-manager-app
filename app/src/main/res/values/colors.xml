@@ -8,5 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFEB3B</color>
     <color name="toolbar_color">#FFAEF509</color>
-    <color name="nav_header">#FFFF9800 </color>
+    <color name="nav_header">#00BCD4</color>
+    <color name="dashboard_color">#673AB7</color>
+    <color name="income_color">#9C27B0</color>
+    <color name="expense_color">#FFE91E36</color>
+
 </resources>
