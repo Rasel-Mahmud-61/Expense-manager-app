@@ -1,0 +1,63 @@
+package com.example.expensemanagerapp.Model;
+
+public class Data {
+
+    private int amount;
+    private String type;
+    private String id;
+    private String note;
+
+    public Data(int amount, String type, String id, String note, String date) {
+        this.amount = amount;
+        this.type = type;
+        this.id = id;
+        this.note = note;
+        this.date = date;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    private String date;
+
+    public  Data(){
+
+    }
+}
