@@ -139,6 +139,32 @@ public class DashBoardFragment extends Fragment {
 
         return myview;
     }
+    private  void ftAnimation(){
+
+        if(isOpen){
+            fab_income_btn.startAnimation(FadeClose);
+            fab_expense_btn.startAnimation(FadeClose);
+            fab_income_btn.setClickable(false);
+            fab_expense_btn.setClickable(false);
+            fab_income_txt.startAnimation(FadeClose);
+            fab_expense_txt.startAnimation(FadeClose);
+            fab_income_txt.setClickable(false);
+            fab_expense_txt.setClickable(false);
+            isOpen=false;
+
+        }else{
+            fab_income_btn.startAnimation(FadOpen);
+            fab_expense_btn.startAnimation(FadOpen);
+            fab_income_btn.setClickable(true);
+            fab_expense_btn.setClickable(true);
+
+            fab_income_txt.startAnimation(FadOpen);
+            fab_expense_txt.startAnimation(FadOpen);
+            fab_income_txt.setClickable(true);
+            fab_expense_txt.setClickable(true);
+            isOpen=true;
+        }
+    }
     private void addData(){
         //fab Button income
         fab_income_btn.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +176,7 @@ public class DashBoardFragment extends Fragment {
         fab_expense_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                expenseDataInsert();
             }
         });
     }
@@ -162,11 +188,11 @@ public class DashBoardFragment extends Fragment {
         LayoutInflater inflater =LayoutInflater.from(getActivity());
          View myviewm =inflater.inflate(R.layout.custom_layout_for_insertdata,null);
          mydialog.setView(myviewm);
-         AlertDialog dialog =mydialog.create();
-
-        EditText edtAmmount =myviewm.findViewById(R.id.amount_edt);
-        EditText edtType =myviewm.findViewById(R.id.type_edt);
-        EditText edtNote =myviewm.findViewById(R.id.note_edt);
+       final   AlertDialog dialog =mydialog.create();
+        dialog.setCancelable(false);
+      final   EditText edtAmmount =myviewm.findViewById(R.id.amount_edt);
+       final EditText edtType =myviewm.findViewById(R.id.type_edt);
+      final   EditText edtNote =myviewm.findViewById(R.id.note_edt);
 
         Button btnSave =myviewm.findViewById(R.id.btnSave);
         Button btnCansel =myviewm.findViewById(R.id.btnCancel);
@@ -201,6 +227,7 @@ public class DashBoardFragment extends Fragment {
                 Data data  =new Data(ourammontint,type,note,id,mDate);
                 mIncomeDatabase.child(id).setValue(data);
                 Toast.makeText(getActivity(),"Data ADDED",Toast.LENGTH_SHORT).show();
+                ftAnimation();
                 dialog.dismiss();
 
 
@@ -211,6 +238,8 @@ public class DashBoardFragment extends Fragment {
         btnCansel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                ftAnimation();
                 dialog.dismiss();
             }
         });
@@ -219,5 +248,51 @@ public class DashBoardFragment extends Fragment {
 
 
     }
+
+    public void expenseDataInsert(){
+
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater =LayoutInflater.from(getActivity());
+         View myview =inflater.inflate(R.layout.custom_layout_for_insertdata,null);
+         mydialog.setView(myview);
+        mydialog.setCancelable(false);
+        final  AlertDialog dialog =mydialog.create();
+      final   EditText amount =myview.findViewById(R.id.amount_edt);
+     final    EditText type =myview.findViewById(R.id.type_edt);
+      final   EditText note =myview.findViewById(R.id.note_edt);
+
+         Button btnSave=myview.findViewById(R.id.btnSave);
+         Button btnCansel =myview.findViewById(R.id.btnCancel);
+         btnSave.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                  String tmAmount =amount.getText().toString().trim();
+                  String tmtype =type.getText().toString().trim();
+                  String tmnote =note.getText().toString().trim();
+                if(TextUtils.isEmpty(tmAmount)){
+                    amount.setError("Required Field..");
+                    return;
+                }
+                if(TextUtils.isEmpty(tmtype)){
+                    type.setError("Required Field..");
+                    return;
+                }
+                if(TextUtils.isEmpty(tmnote)){
+                    note.setError("Required Field..");
+                    return;
+                }
+                ftAnimation();
+             }
+         });
+         btnCansel.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 ftAnimation();
+                 dialog.dismiss();
+             }
+         });
+         dialog.show();
+    }
+
 
 }
