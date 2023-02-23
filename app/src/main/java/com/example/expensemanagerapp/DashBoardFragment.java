@@ -61,6 +61,7 @@ public class DashBoardFragment extends Fragment {
 
     private TextView fab_income_txt;
     private TextView fab_expense_txt;
+    private String mDate;
 
 
     // TODO: Rename and change types and number of parameters
@@ -273,6 +274,7 @@ public class DashBoardFragment extends Fragment {
                     amount.setError("Required Field..");
                     return;
                 }
+                int inamount =Integer.parseInt(tmAmount);
                 if(TextUtils.isEmpty(tmtype)){
                     type.setError("Required Field..");
                     return;
@@ -281,7 +283,16 @@ public class DashBoardFragment extends Fragment {
                     note.setError("Required Field..");
                     return;
                 }
+                String id=mExpenseDatabase.getKey();
+                 String mDate= DateFormat.getDateInstance().format(new Date());
+
+                 Data data =new Data(inamount,tmtype,tmnote,id,mDate);
+                mExpenseDatabase.child(id).setValue(data);
+                Toast.makeText(getActivity(),"Data  added",Toast.LENGTH_SHORT).show();
+
+
                 ftAnimation();
+                dialog.dismiss();
              }
          });
          btnCansel.setOnClickListener(new View.OnClickListener() {
