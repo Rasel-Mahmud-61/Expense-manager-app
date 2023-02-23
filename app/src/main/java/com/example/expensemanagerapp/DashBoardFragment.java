@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
@@ -44,7 +46,9 @@ public class DashBoardFragment extends Fragment {
 
     //Firebase...
 
-
+    private FirebaseAuth mAuth;
+  private DatabaseReference mIncomeDatabase;
+  private DatabaseReference mExpenseDatabase;
 
 
 
@@ -81,8 +85,12 @@ public class DashBoardFragment extends Fragment {
         View myview= inflater.inflate(R.layout.fragment_dash_board, container, false);
 
 
+        mAuth=FirebaseAuth.getInstance();
+        FirebaseUser mUser =mAuth.getCurrentUser();
+        String uid=mUser.getUid();
+        mIncomeDatabase=FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
 
-
+        mIncomeDatabase=FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
 
         //connect floating button
         fab_main_btn=myview.findViewById(R.id.fb_main_plus_btn);
@@ -132,7 +140,7 @@ public class DashBoardFragment extends Fragment {
         fab_income_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            incomeDataInsert();
             }
         });
         fab_expense_btn.setOnClickListener(new View.OnClickListener() {
