@@ -14,14 +14,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.expensemanagerapp.Model.Data;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -191,6 +195,13 @@ public class DashBoardFragment extends Fragment {
                     edtNote.setError("Required Field...");
                     return;
                 }
+                String id =mIncomeDatabase.push().getKey();
+                String mDate= DateFormat.getDateInstance().format(new Date());
+
+                Data data  =new Data(ourammontint,type,note,id,mDate);
+                mIncomeDatabase.child(id).setValue(data);
+                Toast.makeText(getActivity(),"Data ADDED",Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
 
 
             }
