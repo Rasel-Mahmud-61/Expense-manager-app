@@ -6,6 +6,8 @@ public class Data {
     private String type;
     private String id;
     private String note;
+    private String date ;
+
 
     public Data(int amount, String type, String id, String note, String date) {
         this.amount = amount;
@@ -55,7 +57,7 @@ public class Data {
         this.date = date;
     }
 
-    private String date;
+
 
     public  Data(){
 

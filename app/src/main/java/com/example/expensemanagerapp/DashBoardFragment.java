@@ -19,6 +19,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Calendar;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DashBoardFragment#newInstance} factory method to
@@ -42,9 +44,8 @@ public class DashBoardFragment extends Fragment {
 
     //Firebase...
 
-    private FirebaseAuth mAuth;
-    private DatabaseReference mIncomeDatabase;
-    private DatabaseReference mExpenseDatabase;
+
+
 
 
 
@@ -79,12 +80,8 @@ public class DashBoardFragment extends Fragment {
         // Inflate the layout for this fragment
         View myview= inflater.inflate(R.layout.fragment_dash_board, container, false);
 
-        mAuth =FirebaseAuth.getInstance();
 
-        FirebaseUser mUser=mAuth.getCurrentUser();
-        String uid=mUser.getUid();
-        mIncomeDatabase =FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
-        mExpenseDatabase =FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
+
 
 
         //connect floating button
