@@ -95,7 +95,7 @@ public class DashBoardFragment extends Fragment {
         String uid=mUser.getUid();
         mIncomeDatabase=FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
 
-        mIncomeDatabase=FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
+        mIncomeDatabase=FirebaseDatabase.getInstance().getReference().child("ExpenseDatabase").child(uid);
 
         //connect floating button
         fab_main_btn=myview.findViewById(R.id.fb_main_plus_btn);
