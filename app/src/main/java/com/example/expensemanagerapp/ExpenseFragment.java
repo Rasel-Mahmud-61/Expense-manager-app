@@ -79,8 +79,8 @@ public class ExpenseFragment extends Fragment {
         recyclerView =myview.findViewById(R.id.recycler_id_expense);
 
         RecyclerView.LayoutManager layoutManager =new LinearLayoutManager(getActivity());
-                layoutManager.setStackFromEnd(true);
-                layoutManager.setReverseLayout(true);
+                ((LinearLayoutManager) layoutManager).setStackFromEnd(true);
+                ((LinearLayoutManager) layoutManager).setReverseLayout(true);
                 recyclerView.setHasFixedSize(true);
                 recyclerView.setLayoutManager(layoutManager);
                 mExpenseDatabase.addValueEventListener(new ValueEventListener() {
