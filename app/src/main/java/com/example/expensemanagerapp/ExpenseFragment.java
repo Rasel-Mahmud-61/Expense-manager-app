@@ -55,6 +55,13 @@ public class ExpenseFragment extends Fragment {
     private Button btnUpdate;
     private  Button btnDelete;
 
+    //Data variable
+    private String type;
+    private  String note;
+    private  int ammount;
+    private  String post_key;
+
+
 
 
 
@@ -128,9 +135,15 @@ public class ExpenseFragment extends Fragment {
                 holder.setType(model.getType());
                 holder.setNote(model.getNote());
                 holder.setDate(model.getDate());
+
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        post_key=getRef(position).getKey();
+                        type=model.getType();
+                        note=model.getNote();
+                        ammount=model.getAmount();
+
                         updateDataItem();
                     }
                 });
@@ -170,12 +183,23 @@ public class ExpenseFragment extends Fragment {
         LayoutInflater inflater =LayoutInflater.from(getActivity());
         View myview =inflater.inflate(R.layout.update_data_item,null);
         mydialog.setView(myview);
+
         edtAmmount =myview.findViewById(R.id.amount_edt);
         edtType =myview.findViewById(R.id.type_edt);
         edtNote =myview.findViewById(R.id.note_edt);
+
+        edtType.setText(type);
+        edtType.setSelection(type.length());
+        edtNote.setText(note);
+        edtNote.setSelection(note.length());
+
+        edtAmmount.setText(String.valueOf(ammount));
+        edtAmmount.setSelection(String.valueOf(ammount).length());
+        
+
         btnUpdate=myview.findViewById(R.id.btn_upd_Update);
         btnDelete=myview.findViewById(R.id.btnuPD_Delete);
-        AlertDialog dialog=mydialog.create();
+       final  AlertDialog dialog=mydialog.create();
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
