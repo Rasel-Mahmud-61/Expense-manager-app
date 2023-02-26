@@ -1,5 +1,6 @@
 package com.example.expensemanagerapp;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.expensemanagerapp.Model.Data;
@@ -44,6 +47,14 @@ public class ExpenseFragment extends Fragment {
     private DatabaseReference mExpenseDatabase;
   private  RecyclerView recyclerView ;
     private  TextView expenseSumResult;
+    //edt data item
+    private EditText edtAmmount;
+    private  EditText edtType;
+    private  EditText edtNote;
+    //button
+    private Button btnUpdate;
+    private  Button btnDelete;
+
 
 
 
@@ -117,6 +128,12 @@ public class ExpenseFragment extends Fragment {
                 holder.setType(model.getType());
                 holder.setNote(model.getNote());
                 holder.setDate(model.getDate());
+                holder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        updateDataItem();
+                    }
+                });
             }
         };
         recyclerView.setAdapter(adapter);
@@ -146,6 +163,33 @@ public class ExpenseFragment extends Fragment {
             mAAmmount.setText(strammount);
 
         }
+
+    }
+    private  void updateDataItem(){
+        AlertDialog.Builder mydialog=new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater =LayoutInflater.from(getActivity());
+        View myview =inflater.inflate(R.layout.update_data_item,null);
+        mydialog.setView(myview);
+        edtAmmount =myview.findViewById(R.id.amount_edt);
+        edtType =myview.findViewById(R.id.type_edt);
+        edtNote =myview.findViewById(R.id.note_edt);
+        btnUpdate=myview.findViewById(R.id.btn_upd_Update);
+        btnDelete=myview.findViewById(R.id.btnuPD_Delete);
+        AlertDialog dialog=mydialog.create();
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
 
     }
 }
