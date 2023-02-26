@@ -27,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.security.KeyStore;
 import java.security.cert.PolicyNode;
+import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -223,12 +225,26 @@ recyclerView=myview.findViewById(R.id.recycler_id_income);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                type=edtType.getText().toString().trim();
+                note=edtNote.getText().toString().trim();
+
+                String mdammount=String.valueOf(amount);
+                mdammount=edtAmmount.getText().toString().trim();
+                int myAmmount=Integer.parseInt(mdammount);
+
+                String mDate= DateFormat.getDateInstance().format(new Date());
+                Data data =new Data(myAmmount,type,note,post_key,mDate);
+                mIncomeDatabase.child(post_key).setValue(data);
+                dialog.dismiss();
+
 
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mIncomeDatabase.child(post_key).removeValue();
+
                 dialog.dismiss();
             }
         });
