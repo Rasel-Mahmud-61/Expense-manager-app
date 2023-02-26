@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.KeyStore;
 import java.security.cert.PolicyNode;
 
 /**
@@ -58,6 +59,11 @@ public class IncomeFragment<FirebaseRecyclerOptions> extends Fragment {
     // button for update and delete
     private Button btnUpdate;
     private  Button btnDelete;
+    //data item value
+    private  String type;
+    private  String note;
+    private  int amount ;
+    private  String post_key;
 
     public IncomeFragment() {
         // Required empty public constructor
@@ -150,8 +156,16 @@ recyclerView=myview.findViewById(R.id.recycler_id_income);
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                       post_key=getRef(position).getKey();
+
+                        type=model.getType();
+                        note=model.getNote();
+                        amount=model.getAmount();
+
                         updateDataItem();
                     }
+
+
                 });
             }
         };
@@ -192,6 +206,17 @@ recyclerView=myview.findViewById(R.id.recycler_id_income);
         edtAmmount=myview.findViewById(R.id.amount_edt);
         edtType=myview.findViewById(R.id.type_edt);
         edtNote=myview.findViewById(R.id.note_edt);
+
+        //set data to edit text
+         edtType.setText(type);
+         edtType.setSelection(type.length());
+         edtNote.setText(note);
+         edtNote.setSelection(note.length());
+         edtAmmount.setText(String.valueOf(amount));
+         edtAmmount.setSelection(String.valueOf(amount).length());
+
+
+
         btnUpdate =myview.findViewById(R.id.btn_upd_Update);
         btnDelete=myview.findViewById(R.id.btnuPD_Delete);
         AlertDialog dialog =mydialog.create();
