@@ -104,7 +104,7 @@ public class DashBoardFragment extends Fragment {
         String uid=mUser.getUid();
         mIncomeDatabase=FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
 
-        mIncomeDatabase=FirebaseDatabase.getInstance().getReference().child("ExpenseDatabase").child(uid);
+       mExpenseDatabase=FirebaseDatabase.getInstance().getReference().child("ExpenseDatabase").child(uid);
 
         //connect floating button
         fab_main_btn=myview.findViewById(R.id.fb_main_plus_btn);
@@ -156,14 +156,32 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int totalsum=0;
-                    for(DataSnapshot mysnap:dataSnapshot.getChildren()){
+                    for(DataSnapshot mysnap:snapshot.getChildren()){
                         Data data =mysnap.getValue(Data.class);
                         totalsum+=data.getAmount();
                         String stResult=String.valueOf(totalsum);
-                        totalIncomeResult.setText(stResult);
-                        
+                        totalIncomeResult.setText(stResult+".00");
+
 
                     }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        // calculate total expense data
+        mExpenseDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int totalsum=0;
+                for(DataSnapshot mysnapshot:snapshot.getChildren() ){
+                    Data data =mysnapshot.getValue(Data.class);
+                    totalsum+=data.getAmount();
+                    String strTotalSum=String.valueOf(totalsum);
+                    totalExpenseResult.setText(strTotalSum+".00");
+                }
             }
 
             @Override

@@ -112,7 +112,7 @@ public class ExpenseFragment extends Fragment {
                                 Data data =mysanapshot.getValue(Data.class);
                                 expenseSum+=data.getAmount();
                                 String strExpensesum=String.valueOf(expenseSum);
-                                expenseSumResult.setText(strExpensesum);
+                                expenseSumResult.setText(strExpensesum+=".00");
                             }
                     }
 
@@ -156,7 +156,7 @@ public class ExpenseFragment extends Fragment {
     }
     private  static class MyViewHolder extends RecyclerView.ViewHolder{
         View mView;
-        public MyViewHolder(view itemView){
+        public MyViewHolder(view  itemView){
             super(itemView);
             mView=itemView;
 

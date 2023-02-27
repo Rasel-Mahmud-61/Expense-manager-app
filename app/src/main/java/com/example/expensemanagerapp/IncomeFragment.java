@@ -125,7 +125,7 @@ recyclerView=myview.findViewById(R.id.recycler_id_income);
                     Data data =mysanapshort.getValue(Data.class);
                     totlatvalue+=data.getAmount();
                     String StTotalvale=String.valueOf(totlatvalue);
-                        incometotalSum.setText(StTotalvale);
+                        incometotalSum.setText(StTotalvale+".00");
 
                 }
             }
