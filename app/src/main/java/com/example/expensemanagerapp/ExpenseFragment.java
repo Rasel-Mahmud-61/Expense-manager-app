@@ -225,7 +225,7 @@ public class ExpenseFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mExpenseDatabase.child(post_key).removeValue();
-                
+
                 dialog.dismiss();
             }
         });
