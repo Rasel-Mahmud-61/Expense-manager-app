@@ -108,7 +108,7 @@ public class DashBoardFragment extends Fragment {
 
         //connect floating button
         fab_main_btn=myview.findViewById(R.id.fb_main_plus_btn);
-        fab_income_btn=myview.findViewById(R.id.income_ft_btn);
+        fab_income_btn=myview.findViewById(R.id.income_Ft_btn);
         fab_expense_btn=myview.findViewById(R.id.expense_ft_btn);
         //connect floatoing text
         fab_income_txt=myview.findViewById(R.id.expense_ft_text);

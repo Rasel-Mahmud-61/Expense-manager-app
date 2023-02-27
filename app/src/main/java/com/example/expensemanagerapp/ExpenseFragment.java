@@ -108,7 +108,7 @@ public class ExpenseFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int expenseSum =0;
-                            for(DataSnapshot mysanapshot :dataSnapshot.getchildren()){
+                            for(DataSnapshot mysanapshot :snapshot.getChildren()){
                                 Data data =mysanapshot.getValue(Data.class);
                                 expenseSum+=data.getAmount();
                                 String strExpensesum=String.valueOf(expenseSum);
@@ -142,7 +142,9 @@ public class ExpenseFragment extends Fragment {
                 holder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        post_key=getRef(position).getKey();
+                        //change
+                       final String  post_key= getRef(position).getKey();
+
                         type=model.getType();
                         note=model.getNote();
                         ammount=model.getAmount();
@@ -156,7 +158,7 @@ public class ExpenseFragment extends Fragment {
     }
     private  static class MyViewHolder extends RecyclerView.ViewHolder{
         View mView;
-        public MyViewHolder(view  itemView){
+        public MyViewHolder(mView itemView){
             super(itemView);
             mView=itemView;
 
