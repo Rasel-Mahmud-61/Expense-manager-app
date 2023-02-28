@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -71,6 +73,9 @@ public class DashBoardFragment extends Fragment {
     private TextView fab_income_txt;
     private TextView fab_expense_txt;
     private String mDate;
+// recycler view
+    private RecyclerView mRecyclerIncome;
+    private RecyclerView mRecyclerExpense;
 
 
     // TODO: Rename and change types and number of parameters
@@ -116,6 +121,11 @@ public class DashBoardFragment extends Fragment {
         // total income and expense data
         totalIncomeResult =myview.findViewById(R.id.income_set_result);
         totalExpenseResult =myview.findViewById(R.id.expense_set_result);
+        //recyclerview
+        mRecyclerIncome= myview.findViewById(R.id.recycler_income);
+
+        mRecyclerExpense-myview.findViewById(R.id.recycler_expense);
+
 
         //conect animation
         FadOpen= AnimationUtils.loadAnimation(getActivity(),R.anim.fade_open);
@@ -189,6 +199,21 @@ public class DashBoardFragment extends Fragment {
 
             }
         });
+
+        //recycler
+        LinearLayoutManager layoutManagerIncome=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        layoutManagerIncome.setStackFromEnd(true);
+        layoutManagerIncome.setReverseLayout(true);
+        mRecyclerIncome.setHasFixedSize(true);
+        mRecyclerIncome.setLayoutManager(layoutManagerIncome);
+
+        LinearLayoutManager layoutManagerExpense =new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        layoutManagerExpense.setStackFromEnd(true);
+        layoutManagerExpense.setReverseLayout(true);
+        mRecyclerExpense.setHasFixedSize(true);
+        mRecyclerExpense.setLayoutManager(layoutManagerExpense);
+
+
         return myview;
     }
     private  void ftAnimation(){
