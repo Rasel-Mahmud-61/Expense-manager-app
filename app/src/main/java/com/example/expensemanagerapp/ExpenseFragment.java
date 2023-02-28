@@ -125,9 +125,9 @@ public class ExpenseFragment extends Fragment {
           return myview;
     }
     public  void onStart() {
-  super.onStart();
+         super.onStart();
         FirebaseRecyclerOptions<Data> options = new FirebaseRecyclerOptions.Builder<Data>()
-                .setQuery(mIncomeDatabase, Data.class)
+                .setQuery(mExpenseDatabase, Data.class)
                 .build();
 
         adapter = new FirebaseRecyclerAdapter<Data, IncomeFragment.MyViewHolder>(options) {

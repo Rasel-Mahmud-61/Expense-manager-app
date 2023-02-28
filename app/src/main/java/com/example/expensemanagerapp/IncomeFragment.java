@@ -112,6 +112,7 @@ recyclerView=myview.findViewById(R.id.recycler_id_income);
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
 
        RecyclerView.LayoutManager.setReverseLayout(true);
+
        layoutManager.setStackFromEnd(true);
        recyclerView.setHasFixedSize(true);
        recyclerView.setLayoutManager(layoutManager);
@@ -121,7 +122,7 @@ recyclerView=myview.findViewById(R.id.recycler_id_income);
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 int totlatvalue =0;
-                for(DataSnapshot mysanapshort: dataSnapshot.getChildren()){
+                for(DataSnapshot mysanapshort: snapshot.getChildren()){
                     Data data =mysanapshort.getValue(Data.class);
                     totlatvalue+=data.getAmount();
                     String StTotalvale=String.valueOf(totlatvalue);
