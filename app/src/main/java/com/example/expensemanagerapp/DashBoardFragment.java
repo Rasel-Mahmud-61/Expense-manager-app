@@ -23,6 +23,7 @@ import com.example.expensemanagerapp.Model.Data;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -381,5 +382,52 @@ public class DashBoardFragment extends Fragment {
          dialog.show();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseRecyclerAdapter<Data,IncomeViewHolder>IncomeAdapter=new FirebaseRecyclerAdapter<Data,IncomeViewHolder>
+                (
+                    Data.class,
+                    R.layout.dashboard_income,
+                    DashBoardFragment.IncomeViewHolder.class,
+                    mIncomeDatabase
+                ){
+             @Override
+            protected void populateViewHolder(IncomeViewHolder viewHolder,Data model,int position){
+                 viewHolder.setIncomeType(model.getType());
+                 viewHolder.setIncomeAmmount(model.getAmount());
+                 viewHolder.setIncomeDate(model.getDate());
+             }
+        };
 
+        mRecyclerIncome.setAdapter(incomeAdapter);
+    }
+
+    //For Income Data
+
+    public static class IncomeViewHolder extends RecyclerView.ViewHolder{
+        View mIncomeView;
+        public  IncomeViewHolder(View itemView){
+            super(itemView);
+            mIncomeView=itemView;
+        }
+
+        public void setIncomeType(String type){
+            TextView mtype=mIncomeView.findViewById(R.id.type_Income_ds);
+            mtype.setText(type);
+        }
+        public void setIncomeAmmount(int Ammount){
+            TextView mAmmount =mIncomeView.findViewById(R.id.ammoun_income_ds);
+            String strAmmount =String.valueOf(Ammount);
+            mAmmount.setText(strAmmount);
+        }
+
+        public void setIncomeDate(String date){
+            TextView mDate=mIncomeView.findViewById(R.id.date_income_ds);
+            mDate.setText(date);
+
+        }
+
+
+    }
 }
