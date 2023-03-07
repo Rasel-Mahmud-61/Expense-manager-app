@@ -2,12 +2,6 @@ package com.example.expensemanagerapp;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +13,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.expensemanagerapp.Model.Data;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +31,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -77,6 +76,9 @@ public class DashBoardFragment extends Fragment {
 // recycler view
     private RecyclerView mRecyclerIncome;
     private RecyclerView mRecyclerExpense;
+    private FirebaseRecyclerAdapter incomeAdapter ;
+    private  FirebaseRecyclerAdapter expenseAdapter;
+
 
 
     // TODO: Rename and change types and number of parameters
@@ -128,7 +130,7 @@ public class DashBoardFragment extends Fragment {
         //recyclerview
         mRecyclerIncome= myview.findViewById(R.id.recycler_income);
 
-        mRecyclerExpense-myview.findViewById(R.id.recycler_expense);
+        mRecyclerExpense=myview.findViewById(R.id.recycler_expense);
 
 
         //conect animation
@@ -388,43 +390,62 @@ public class DashBoardFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseRecyclerAdapter<Data,IncomeViewHolder>IncomeAdapter=new FirebaseRecyclerAdapter<Data,IncomeViewHolder>
-                (
-                    Data.class,
-                    R.layout.dashboard_income,
-                    DashBoardFragment.IncomeViewHolder.class,
-                    mIncomeDatabase
-                ){
-             @Override
-            protected void populateViewHolder(IncomeViewHolder viewHolder,Data model,int position){
-                 viewHolder.setIncomeType(model.getType());
-                 viewHolder.setIncomeAmmount(model.getAmount());
-                 viewHolder.setIncomeDate(model.getDate());
-             }
-        };
 
-        mRecyclerIncome.setAdapter(incomeAdapter);
-        FirebaseRecyclerAdapter<Data,ExpenseViewHolder>expenseAdapter=new FirebaseRecyclerAdapter<Data,ExpenseViewHolder>
-                (
-                        Data.class,
-                        R.layout.dashboart_expense,
-                        DashBoardFragment.ExpenseViewHolder.class,
-                        mExpenseDatabase
-                ){
+
+        FirebaseRecyclerOptions<Data> options = new FirebaseRecyclerOptions.Builder<Data>()
+                .setQuery(mIncomeDatabase, Data.class)
+                .build();
+
+        incomeAdapter =new FirebaseRecyclerAdapter<Data,IncomeViewHolder>(options){
+
+            @NonNull
             @Override
-            protected void populateViewHolder(IncomeViewHolder viewHolder,Data model,int position){
-                viewHolder.setExpenseType(model.getType());
-                viewHolder.setExpenseAmmount(model.getAmount());
-                viewHolder.setExpenseDate(model.getDate());
+            public IncomeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return null;
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull IncomeViewHolder holder, int position, @NonNull Data model) {
+                holder.setIncomeType(model.getType());
+                holder.setIncomeAmmount(model.getAmount());
+                holder.setIncomeDate(model.getDate());
+            }
+        };
+        mRecyclerIncome.setAdapter(incomeAdapter);
+
+
+
+
+
+        FirebaseRecyclerOptions<Data> option = new FirebaseRecyclerOptions.Builder<Data>()
+                .setQuery(mExpenseDatabase, Data.class)
+                .build();
+
+        expenseAdapter =new FirebaseRecyclerAdapter<Data,ExpenseViewHolder>(options) {
+
+            @NonNull
+            @Override
+            public ExpenseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return null;
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull ExpenseViewHolder holder, int position, @NonNull Data model) {
+               holder.setExpenseType(model.getType());
+                holder.setExpenseAmmount(model.getAmount());
+               holder.setExpenseDate(model.getDate());
             }
         };
         mRecyclerExpense.setAdapter(expenseAdapter);
+
     }
 
     //For Income Data
 
     public static class IncomeViewHolder extends RecyclerView.ViewHolder{
         View mIncomeView;
+        private String expenseType;
+
         public  IncomeViewHolder(View itemView){
             super(itemView);
             mIncomeView=itemView;
@@ -447,34 +468,35 @@ public class DashBoardFragment extends Fragment {
         }
 
 
+        public void setExpenseType(String expenseType) {
+            this.expenseType = expenseType;
+        }
+    }
+
+    public class ExpenseViewHolder extends RecyclerView.ViewHolder {
+        View mExpenseView;
+        private String expenseType;
+
+        public ExpenseViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+
+        public void setExpenseType(String expenseType) {
+            this.expenseType = expenseType;
+        }
+
+        public void setExpenseAmmount(int  Ammount) {
+            TextView mAmmount =mExpenseView.findViewById(R.id.ammoun_income_ds);
+            String strAmmount =String.valueOf(Ammount);
+            mAmmount.setText(strAmmount);
+        }
+
+        public void setExpenseDate(String date) {
+            TextView mDate=mExpenseView.findViewById(R.id.date_income_ds);
+            mDate.setText(date);
+        }
     }
 }
 
 //For Expense Data
 
-public static class ExpenseViewHolder extends RecyclerView.ViewHolder{
-
-    View mExpenseView;
-
-    public   ExpenseViewHolder(View itemView){
-        super(itemView);
-        mExpenseView=itemView;
-
-    }
-
-    public void setExpenseType(String type){
-        TextView mtype =mExpenseView.findViewById(R.id.type_expense_ds);
-        mtype.setText(type);
-    }
-    public void setExpenseAmmount(int ammount){
-        TextView mAmmount =mExpenseView.findViewById(R.id.ammoun_expense_ds);
-        String strAmmount =String.valueOf(ammount);
-        mAmmount.setText(strAmmount);
-    }
-
-    public void setExpenseDate(String date){
-        TextView mDate =mExpenseView.findViewById(R.id.date_expense_ds);
-        mDate.setText(date);
-    }
-
-}

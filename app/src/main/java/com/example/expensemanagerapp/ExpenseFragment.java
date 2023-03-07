@@ -1,13 +1,8 @@
 package com.example.expensemanagerapp;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.expensemanagerapp.Model.Data;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -63,6 +65,9 @@ public class ExpenseFragment extends Fragment {
     private  String note;
     private  int ammount;
     private  String post_key;
+
+    // test
+    private FirebaseRecyclerAdapter expenseadapter;
 
 
 
@@ -130,10 +135,22 @@ public class ExpenseFragment extends Fragment {
                 .setQuery(mExpenseDatabase, Data.class)
                 .build();
 
-        adapter = new FirebaseRecyclerAdapter<Data, IncomeFragment.MyViewHolder>(options) {
+        expenseadapter = new FirebaseRecyclerAdapter<Data,ExpenseFragment.MyViewHolder>(options) {
 
 
-            protected void onBindViewHolder(IncomeFragment.MyViewHolder holder, int position, @NonNull Data model) {
+            @Override
+            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Data model) {
+
+            }
+
+            @NonNull
+            @Override
+            public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return new ExpenseFragment.MyViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.expense_recycler_data, parent, false));
+
+            }
+
+            protected void onBindViewHolder(IncomeFragment.MyViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull Data model) {
                 holder.setAmmount(model.getAmount());
                 holder.setType(model.getType());
                 holder.setNote(model.getNote());
@@ -154,11 +171,11 @@ public class ExpenseFragment extends Fragment {
                 });
             }
         };
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(expenseadapter);
     }
-    private  static class MyViewHolder extends RecyclerView.ViewHolder{
+   public static class MyViewHolder extends RecyclerView.ViewHolder{
         View mView;
-        public MyViewHolder(mView itemView){
+        public MyViewHolder(View itemView){
             super(itemView);
             mView=itemView;
 
