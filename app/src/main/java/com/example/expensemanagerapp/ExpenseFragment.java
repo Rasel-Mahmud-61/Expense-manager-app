@@ -98,6 +98,7 @@ public class ExpenseFragment extends Fragment {
           View myview= inflater.inflate(R.layout.fragment_expense, container, false);
 
             mAuth=FirebaseAuth.getInstance();
+
         FirebaseUser mUser=mAuth.getCurrentUser();
         String uid=mUser.getUid();
         mExpenseDatabase= FirebaseDatabase.getInstance().getReference().child("ExpenseDatabase").child(uid);
@@ -131,17 +132,15 @@ public class ExpenseFragment extends Fragment {
     }
     public  void onStart() {
          super.onStart();
+
         FirebaseRecyclerOptions<Data> options = new FirebaseRecyclerOptions.Builder<Data>()
                 .setQuery(mExpenseDatabase, Data.class)
                 .build();
 
-        expenseadapter = new FirebaseRecyclerAdapter<Data,ExpenseFragment.MyViewHolder>(options) {
+        expenseadapter = new FirebaseRecyclerAdapter<Data,MyViewHolder>(options) {
 
 
-            @Override
-            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull Data model) {
 
-            }
 
             @NonNull
             @Override
@@ -150,7 +149,7 @@ public class ExpenseFragment extends Fragment {
 
             }
 
-            protected void onBindViewHolder(IncomeFragment.MyViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull Data model) {
+            protected void onBindViewHolder(MyViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull Data model) {
                 holder.setAmmount(model.getAmount());
                 holder.setType(model.getType());
                 holder.setNote(model.getNote());
@@ -160,7 +159,7 @@ public class ExpenseFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         //change
-                       final String  post_key= getRef(position).getKey();
+                       String  post_key= getRef(position).getKey();
 
                         type=model.getType();
                         note=model.getNote();
@@ -171,7 +170,9 @@ public class ExpenseFragment extends Fragment {
                 });
             }
         };
+            expenseadapter.startListening();
         recyclerView.setAdapter(expenseadapter);
+
     }
    public static class MyViewHolder extends RecyclerView.ViewHolder{
         View mView;
@@ -252,4 +253,5 @@ public class ExpenseFragment extends Fragment {
 
 
     }
+
 }

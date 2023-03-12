@@ -183,8 +183,11 @@ recyclerView=myview.findViewById(R.id.recycler_id_income);
                 });
             }
         };
+
+        adapter.startListening();
         recyclerView.setAdapter(adapter);
     }
+
     public  static class MyViewHolder extends  RecyclerView.ViewHolder {
         View mView;
 
