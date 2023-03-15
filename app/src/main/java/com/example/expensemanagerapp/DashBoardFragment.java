@@ -270,16 +270,16 @@ public class DashBoardFragment extends Fragment {
         AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
 
         LayoutInflater inflater =LayoutInflater.from(getActivity());
-         View myviewm =inflater.inflate(R.layout.custom_layout_for_insertdata,null);
-         mydialog.setView(myviewm);
+         View myview =inflater.inflate(R.layout.custom_layout_for_insertdata,null);
+         mydialog.setView(myview);
        final   AlertDialog dialog =mydialog.create();
         dialog.setCancelable(false);
-      final   EditText edtAmmount =myviewm.findViewById(R.id.amount_edt);
-       final EditText edtType =myviewm.findViewById(R.id.type_edt);
-      final   EditText edtNote =myviewm.findViewById(R.id.note_edt);
+      final   EditText edtAmmount =myview.findViewById(R.id.amount_edt);
+       final EditText edtType =myview.findViewById(R.id.type_edt);
+      final   EditText edtNote =myview.findViewById(R.id.note_edt);
 
-        Button btnSave =myviewm.findViewById(R.id.btnSave);
-        Button btnCansel =myviewm.findViewById(R.id.btnCancel);
+        Button btnSave =myview.findViewById(R.id.btnSave);
+        Button btnCansel =myview.findViewById(R.id.btnCancel);
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -339,6 +339,8 @@ public class DashBoardFragment extends Fragment {
         LayoutInflater inflater =LayoutInflater.from(getActivity());
          View myview =inflater.inflate(R.layout.custom_layout_for_insertdata,null);
          mydialog.setView(myview);
+
+
         mydialog.setCancelable(false);
         final  AlertDialog dialog =mydialog.create();
       final   EditText amount =myview.findViewById(R.id.amount_edt);
@@ -482,12 +484,11 @@ public class DashBoardFragment extends Fragment {
 
     public  static  class ExpenseViewHolder extends RecyclerView.ViewHolder {
         View mExpenseView;
-        private String expenseType;
+       // private String expenseType;
 
-        public ExpenseViewHolder(@NonNull View itemView) {
-
-            super(itemView);
-            this.mExpenseView=itemView;
+        public  ExpenseViewHolder(View item){
+            super(item);
+            mExpenseView=item;
         }
 
         public void setExpenseType(String expenseType) {
