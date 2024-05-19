@@ -3,9 +3,13 @@
 
 ## 👉 Indroduction 
 
- this is a expense and  income tracker app  .Here  i used Andriod Studio IDE for develop this expense and income tracker app.
+ **This mobile application is designed to help users track their expenses and income efficiently. Developed using the Android Studio IDE, the app provides a user-friendly interface for managing personal finances**
 
- # My Expense Manager App
+## ✍️Technologies
+
+- **Development Platform: Android Studio IDE**
+- **Programming Language**: Java
+
 
 ## ✍️ Features
 
